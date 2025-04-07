@@ -26,10 +26,10 @@ function FilterBar () {
     <>
       <div className="bg-light">
         <div className="container ">
-          <div className="row row-cols-6">
+          <div className="row row-cols-6 g-3 py-3">
             {allLocations.map( location => (
               <div className="col" key={location}>
-                <button className="btn w-100">
+                <button className="btn btn-dark w-100">
                   {location}
                 </button>
               </div>
