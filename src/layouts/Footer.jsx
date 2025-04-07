@@ -8,9 +8,9 @@
 
 function Footer () {
   return (
-    <>
-      <p>444444</p>
-    </>
+    <div className="bg-dark p-3">
+      <h2 className="text-white text-center">台南天氣預報練習</h2>
+    </div>
   );
 };
 
