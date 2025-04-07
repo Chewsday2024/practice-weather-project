@@ -9,6 +9,7 @@ const AUTH_CODE = import.meta.env.VITE_AUTH_CODE;
  
 const initialState = { 
   allLocations: [],
+  weatherReport: {},
   status: 'idle',
   error: null
 };
@@ -23,17 +24,15 @@ const filterbarSlice = createSlice({
   },
   extraReducers ( bulider ) {
     bulider
-      .addCase(fetchAllLocation.pending, state => {
+      .addCase(fetchAllLocations.pending, state => {
         state.status = 'loading';
       })
-      .addCase(fetchAllLocation.fulfilled, (state, action) => {
+      .addCase(fetchAllLocations.fulfilled, (state, action) => {
         state.status = 'succeed';
-
-        console.log(action.payload.map( item => item.LocationName));
 
         state.allLocations = action.payload.map( item => item.LocationName);
       })
-      .addCase(fetchAllLocation.rejected, (state, action) => {
+      .addCase(fetchAllLocations.rejected, (state, action) => {
         state.status = 'failed';
 
         state.error = action.error.message;
@@ -43,11 +42,19 @@ const filterbarSlice = createSlice({
 
 
 
-export const fetchAllLocation = createAsyncThunk('filterbar/fetchAllLocation', async ( location = '') => {
-  const res = await axios.get(`${BASE_URL}?Authorization=${AUTH_CODE}&ElementName=天氣現象&LocationName=${location}`);
+export const fetchAllLocations = createAsyncThunk('filterbar/fetchAllLocation', async () => {
+  const res = await axios.get(`${BASE_URL}?Authorization=${AUTH_CODE}&ElementName=天氣現象`);
 
   return res.data.records.Locations[0].Location;
 });
+
+
+
+export const fetchLoactionWeatherReport = createAsyncThunk('filterbar/fetchLocationWeatherReport', async ( location = null ) => {
+  const res = await axios.get(`${BASE_URL}?Authorization=${AUTH_CODE}&ElementName=天氣現象&LocationName=${location}`);
+
+  console.log(res);
+})
 
 
 

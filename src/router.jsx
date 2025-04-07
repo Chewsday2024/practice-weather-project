@@ -2,8 +2,9 @@ import { createHashRouter } from "react-router-dom";
 
 
 import App from "./App";
-import Index from "./pages/index";
+import Index from "./pages/Index";
 import FilterBar from "./layouts/filterbar/FilterBar";
+import Report from "./pages/Report";
 
 
 
@@ -22,7 +23,7 @@ const router = createHashRouter([
           },
           {
             path: ':location',
-            element: <Index />
+            element: <Report />
           }
         ]
       },

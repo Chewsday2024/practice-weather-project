@@ -16,7 +16,7 @@ function App() {
     <>
       <Header />
 
-      <div className="vh-100" style={{backgroundColor: 'rgb(32, 0, 77)'}}>
+      <div className="bg-light">
         <Outlet />
       </div>
 
