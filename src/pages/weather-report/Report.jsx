@@ -22,8 +22,6 @@ function Report () {
 
   const swiperRef = useRef(null);
 
-  console.log(weatherReport);
-
 
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
