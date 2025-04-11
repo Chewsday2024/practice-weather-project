@@ -12,25 +12,14 @@ import * as filterbarSlice from '../../src/layouts/filterbar/filterbarSlice';
 
 
 describe('FilterBar', () => {
-  it('should not render locations link if fetchAllLocations function is not dispatch', () => {
+  it('should not render locations link if FilterBar recived no locations data', () => {
     renderWithProviders(<FilterBar />);
 
-    const link = screen.queryByRole('link');
-    expect(link).not.toBeInTheDocument();    
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
 
-  it('should render locations link if fetchAllLocations function is dispatch', async () => {
-    const mockThunkAction = {type: 'filterbar/fetchAllLocations/pending'};
-
-    const mockFetch = vi.spyOn(filterbarSlice, 'fetchAllLocations')
-      .mockReturnValue(mockThunkAction);
-
-    vi.spyOn(filterbarSlice, 'selectAllLocations')
-      .mockImplementation(state => state.filterbar.allLocations);
-
-      
-
+  it('should render locations link if FilterBar recived locations data', () => {
     const allLocations = {
       filterbar: {
         allLocations: ['Taipei', 'Kaohsiung']
@@ -39,14 +28,28 @@ describe('FilterBar', () => {
 
     renderWithProviders(<FilterBar />, { preloadedState: allLocations });
 
-
-
-    expect(mockFetch).toHaveBeenCalled();
-
+    
     allLocations.filterbar.allLocations.forEach( location => {
       const link = screen.getByRole('link', { name: location })
 
-      expect(link).toBeInTheDocument();
+      expect(link).toHaveTextContent(location)
+      expect(link).toHaveAttribute('href', `/${location}`)
     });
+    
+    expect(screen.getByText('Taipei')).toBeInTheDocument();
+    expect(screen.getByText('Kaohsiung')).toBeInTheDocument();
+  })
+
+
+  it('should dispatch function fetchAllLocations when mount', () => {
+    const mockThunkAction = {type: 'filterbar/fetchAllLocations/pending'};
+    
+    const mockFetch = vi.spyOn(filterbarSlice, 'fetchAllLocations')
+    .mockReturnValue(mockThunkAction);
+    
+    
+    renderWithProviders(<FilterBar />);
+
+    expect(mockFetch).toHaveBeenCalled();
   })
 })
