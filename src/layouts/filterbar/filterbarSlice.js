@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const AUTH_CODE = import.meta.env.VITE_AUTH_CODE;
+const API_PATH = import.meta.env.VITE_API_PATH;
  
  
  
@@ -59,7 +59,7 @@ const filterbarSlice = createSlice({
 
 
 export const fetchAllLocations = createAsyncThunk('filterbar/fetchAllLocation', async () => {
-  const res = await axios.get(`${BASE_URL}?Authorization=${AUTH_CODE}&ElementName=天氣現象`);
+  const res = await axios.get(`${BASE_URL}?Authorization=${API_PATH}&ElementName=天氣現象`);
 
   return res.data.records.Locations[0].Location;
 });
@@ -67,7 +67,7 @@ export const fetchAllLocations = createAsyncThunk('filterbar/fetchAllLocation', 
 
 
 export const fetchLoactionWeatherReport = createAsyncThunk('filterbar/fetchLocationWeatherReport', async ( location = null ) => {
-  const res = await axios.get(`${BASE_URL}?Authorization=${AUTH_CODE}&ElementName=天氣現象&LocationName=${location}`);
+  const res = await axios.get(`${BASE_URL}?Authorization=${API_PATH}&ElementName=天氣現象&LocationName=${location}`);
 
   return res.data.records.Locations[0].Location[0].WeatherElement[0].Time;
 })
