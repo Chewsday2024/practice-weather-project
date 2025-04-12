@@ -45,22 +45,21 @@ function Report () {
       <h1 className="text-center fw-bold ">{location}</h1>
 
       <hr className="my-5 " />
-      
-      <Swiper
-        slidesPerView={2}
-        modules={[Autoplay]}
-        autoplay={{delay: 2000}}
-        speed={2000}
-        loop={true}
+      {weatherReport.length > 0 && 
+        <Swiper
+          slidesPerView={2}
+          modules={[Autoplay]}
+          autoplay={{delay: 2000}}
+          speed={2000}
+          loop={true}
 
-        breakpoints={{
-          768: {slidesPerView: 3}
-        }}
+          breakpoints={{
+            768: {slidesPerView: 3}
+          }}
 
-        ref={swiperRef}
-      >
-        {weatherReport.length > 0 && 
-          weatherReport.map( (report, index) => {
+          ref={swiperRef}
+        >
+          {weatherReport.map( (report, index) => {
             const startTime = new Date(report.StartTime);
             const endTime = new Date(report.EndTime);
 
@@ -105,9 +104,9 @@ function Report () {
                 </div>
               </SwiperSlide>
             )
-          })
-        }
-      </Swiper>
+          })}
+        </Swiper>
+      }
     </div>
   );
 };
